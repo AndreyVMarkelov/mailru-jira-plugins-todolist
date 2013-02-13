@@ -1,0 +1,36 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="todolist"/>
+
+    <!-- Custom fields -->
+    <customfield-type key="todo-list-custom-field" name="ToDo List custom field" class="ru.mail.jira.plugins.ToDoListCf">
+        <description>This is the ToDo list custom field</description>
+        <resource type="velocity" name="view" location="templates/todolist-cf-view.vm"/>
+        <resource type="velocity" name="xml" location="templates/todolist-cf-xml.vm"/>
+        <resource type="velocity" name="edit" location="templates/todolist-cf-edit.vm"/>
+    </customfield-type>
+
+    <!-- add our web resources -->
+    <web-resource key="todolist-resources" name="todolist Web Resources">
+        <resource type="download" name="todolist.css" location="/css/todolist.css"/>
+        <resource type="download" name="todolist.js" location="/js/todolist.js"/>
+        <resource type="download" name="jquery.json-2.3.js" location="/js/jquery.json-2.3.js"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>atl.general</context>
+    </web-resource>
+
+    <component key="myPluginComponent" class="ru.mail.jira.plugins.MyPluginComponentImpl" public="true">
+        <interface>ru.mail.jira.plugins.MyPluginComponent</interface>
+    </component>
+
+    <!-- import from the product container -->
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+</atlassian-plugin>

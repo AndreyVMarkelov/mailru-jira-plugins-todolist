@@ -1,0 +1,61 @@
+## Created by Andrey Markelov 13-02-2013.
+## Copyright Mail.Ru Group 2013. All rights reserved.
+#controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
+<div width="100%" id="todolist-main">
+    <p>
+        <input type="text" id="todoinput"/>
+        <input type="button" id="addtodoitem" value="Go"/>
+    </p>
+    <table width="100%" class="items" id="items">
+    </table>​
+    <script language="javascript">
+    jQuery("#addtodoitem").click(function (e) {
+        var todoinput = jQuery("#todoinput").val();
+        if (todoinput) {
+            var sharesObj = jQuery.evalJSON(jQuery("#$customField.id").val());
+            for (var objId in sharesObj) {
+                if (sharesObj[objId]["id"] == todoinput) {
+                    jQuery("#todolist-main").animate({backgroundColor: "red"}, 500, function() { jQuery("#todolist-main").animate({backgroundColor: "white"}, 500);});
+                    return;
+                }
+            }
+
+            jQuery("#items").append("<tr><td><input class='de1' type='checkbox' value='ff'/></td><td><span>" + todoinput + "</span></td><td><a href='#' class='de'/></td></tr>");
+            jQuery("#$customField.id").val("dewdw");
+            jQuery(".de1").change(function() {
+                var sharesObj1 = jQuery.evalJSON(jQuery("#$customField.id").val());
+                var tx = jQuery(this).parent().next().find("span").text();
+                for (var objId in sharesObj) {
+                    if (sharesObj[objId]["id"] == tx) {
+                        if (this.checked) {
+                            sharesObj[objId]["type"] = 'done';
+                        } else {
+                            sharesObj[objId]["type"] = 'todo';
+                        }
+                        jQuery("#$customField.id").val(jQuery.toJSON(sharesObj));
+                    }
+                }
+
+                if (this.checked) {
+                    jQuery(this).parent().next().children().css({'color': 'red', 'text-decoration': 'line-through'});
+                } else {
+                    jQuery(this).parent().next().children().css({'color': 'black', 'text-decoration': 'none'});
+                }
+            });
+
+            jQuery(".de").click(function(e) {
+                jQuery(this).parent().parent().remove();
+            });
+            jQuery("#todoinput").val("");
+
+            var itemObj = new Object();
+            itemObj["id"] = todoinput;
+            itemObj["type"] = "todo";
+            sharesObj.push(itemObj);
+            jQuery("#$customField.id").val(jQuery.toJSON(sharesObj));
+        }
+    });
+</script>
+</div>
+<input type="hidden" name="$customField.id" id="$customField.id" value="[]" class="textfield"/>
+#controlFooter ($action $fieldLayoutItem.fieldDescription $displayParameters.noHeader)
