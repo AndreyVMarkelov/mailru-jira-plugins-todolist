@@ -1,1 +1,11 @@
-$!value
+#if($value)
+<table width="100%" class="items" id="items">
+#foreach($item in $items)
+    <tr>
+        <td><input class='de1' type='checkbox' #if($item.isDone())checked="checked"#end value='ff'/></td>
+        <td><span>$item.getTodo()</span></td>
+        <td><a href='#' class='de'/></td>
+    </tr>
+#end
+</table>​
+#end

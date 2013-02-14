@@ -1,5 +1,6 @@
 package ru.mail.jira.plugins;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.customfields.impl.AbstractSingleFieldType;
@@ -10,6 +11,9 @@ import com.atlassian.jira.issue.customfields.persistence.PersistenceFieldType;
 import com.atlassian.jira.issue.fields.CustomField;
 import com.atlassian.jira.issue.fields.layout.field.FieldLayoutItem;
 import com.atlassian.jira.util.NotNull;
+import com.atlassian.jira.util.json.JSONArray;
+import com.atlassian.jira.util.json.JSONException;
+import com.atlassian.jira.util.json.JSONObject;
 import com.atlassian.util.concurrent.Nullable;
 
 public class ToDoListCf
@@ -33,6 +37,36 @@ public class ToDoListCf
         FieldLayoutItem fieldLayoutItem)
     {
         Map<String, Object> params = super.getVelocityParameters(issue, field, fieldLayoutItem);
+
+        LinkedHashSet<ToDoItem> items = new LinkedHashSet<ToDoItem>();
+        Object value = issue.getCustomFieldValue(field);
+        if (value != null && !value.toString().isEmpty())
+        {
+            try
+            {
+                JSONArray jsonObj = new JSONArray(value.toString());
+                for (int i = 0; i < jsonObj.length(); i++)
+                {
+                    JSONObject obj = jsonObj.getJSONObject(i);
+                    String todo = obj.getString("id");
+                    String type = obj.getString("type");
+
+                    if (type.equals("done"))
+                    {
+                        items.add(new ToDoItem(todo, true));
+                    }
+                    else
+                    {
+                        items.add(new ToDoItem(todo, false));
+                    }
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        params.put("items", items);
 
         return params;
     }

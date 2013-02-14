@@ -7,7 +7,14 @@
         <input type="button" id="addtodoitem" value="Go"/>
     </p>
     <table width="100%" class="items" id="items">
-    </table>​
+    #foreach($item in $items)
+        <tr>
+            <td><input class='de1' type='checkbox' #if($item.isDone())checked="checked"#end value='ff'/></td>
+            <td><span>$item.getTodo()</span></td>
+            <td><a href='#' class='de'/></td>
+        </tr>
+    #end
+    </table>
     <script language="javascript">
     jQuery("#addtodoitem").click(function (e) {
         var todoinput = jQuery("#todoinput").val();
