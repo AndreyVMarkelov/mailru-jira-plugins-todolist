@@ -5,7 +5,7 @@
 <table width="100%" class="todotable" id="$currtime">
 #foreach($item in $items)
     <tr class="initial">
-        <td>#if($item.isDone())X#end</td>
+        <td width="16px">#if($item.isDone())X#end</td>
         <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
     </tr>
 #end
@@ -15,7 +15,7 @@
     <table width="100%" class="todotable" id="$currtime">
     #foreach($item in $items)
         <tr class="initial">
-            <td><input class='todocheckbox' type='checkbox' #if($item.isDone())checked="checked"#end value='true' disabled='disabled'/></td>
+            <td width="16px"><input class='todocheckbox' type='checkbox' #if($item.isDone())checked="checked"#end value='true' disabled='disabled'/></td>
             <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
         </tr>
     #end
