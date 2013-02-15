@@ -1,3 +1,7 @@
+/*
+ * Created by Andrey Markelov 13-02-2013.
+ * Copyright Mail.Ru Group 2013. All rights reserved.
+ */
 package ru.mail.jira.plugins;
 
 import java.util.LinkedHashSet;
@@ -16,6 +20,11 @@ import com.atlassian.jira.util.json.JSONException;
 import com.atlassian.jira.util.json.JSONObject;
 import com.atlassian.util.concurrent.Nullable;
 
+/**
+ * ToDo list custom field.
+ * 
+ * @author Andrey Markelov
+ */
 public class ToDoListCf
     extends AbstractSingleFieldType<String>
 {
@@ -27,6 +36,50 @@ public class ToDoListCf
         GenericConfigManager genericConfigManager)
     {
         super(customFieldValuePersister, genericConfigManager);
+    }
+
+    @Override
+    public String getChangelogValue(
+        CustomField field,
+        String value)
+    {
+        return super.getChangelogValue(field, value);
+    }
+
+    @Override
+    @NotNull
+    protected PersistenceFieldType getDatabaseType()
+    {
+        return PersistenceFieldType.TYPE_UNLIMITED_TEXT;
+    }
+
+    @Override
+    @Nullable
+    protected Object getDbValueFromObject(String str)
+    {
+        return str;
+    }
+
+    @Override
+    @Nullable
+    protected String getObjectFromDbValue(
+        @NotNull Object obj)
+    throws FieldValidationException
+    {
+        return (null == obj) ? "" : obj.toString();
+    }
+
+    @Override
+    public String getSingularObjectFromString(String str)
+    throws FieldValidationException
+    {
+        return str;
+    }
+
+    @Override
+    public String getStringFromSingularObject(String str)
+    {
+        return str;
     }
 
     @Override
@@ -65,45 +118,16 @@ public class ToDoListCf
             {
                 e.printStackTrace();
             }
+            params.put("data", value.toString());
         }
+        else
+        {
+            params.put("data", "[]");
+        }
+        params.put("i18n", getI18nBean());
         params.put("items", items);
+        params.put("currtime", Long.valueOf(System.currentTimeMillis()).toString());
 
         return params;
-    }
-
-    @Override
-    public String getSingularObjectFromString(String str)
-    throws FieldValidationException
-    {
-        return str;
-    }
-
-    @Override
-    public String getStringFromSingularObject(String str)
-    {
-        return str;
-    }
-
-    @Override
-    @NotNull
-    protected PersistenceFieldType getDatabaseType()
-    {
-        return PersistenceFieldType.TYPE_UNLIMITED_TEXT;
-    }
-
-    @Override
-    @Nullable
-    protected Object getDbValueFromObject(String str)
-    {
-        return str;
-    }
-
-    @Override
-    @Nullable
-    protected String getObjectFromDbValue(
-        @NotNull Object obj)
-    throws FieldValidationException
-    {
-        return (null == obj) ? "" : obj.toString();
     }
 }

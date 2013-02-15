@@ -2,67 +2,19 @@
 ## Copyright Mail.Ru Group 2013. All rights reserved.
 #controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
 <div width="100%" id="todolist-main">
-    <p>
-        <input type="text" id="todoinput"/>
-        <input type="button" id="addtodoitem" value="Go"/>
+    <p class="addtodoblock">
+        <input type="text" size="50" id="todoinput"/>
+        <input type="button" id="addtodoitem" onclick="ru_mail_addToDoItem(event, '$customField.id', '$currtime');" value='$i18n.getText("ru.mail.todolist.addtodo")'/>
     </p>
-    <table width="100%" class="items" id="items">
+    <table width="100%" class="todotable" id="$currtime">
     #foreach($item in $items)
-        <tr>
-            <td><input class='de1' type='checkbox' #if($item.isDone())checked="checked"#end value='ff'/></td>
-            <td><span>$item.getTodo()</span></td>
-            <td><a href='#' class='de'/></td>
+        <tr class="initial" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">
+            <td width="16px" class="checkboxcolumn"><input class='todocheckbox' type='checkbox' onchange="ru_mail_changeToDoItem(event, '$customField.id');" #if($item.isDone())checked="checked"#end value='true'/></td>
+            <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
+            <td width="32px" ><a href='#' class='todoremovebtn' onclick="ru_mail_removeToDoItem(event, '$customField.id');"/></td>
         </tr>
     #end
     </table>
-    <script language="javascript">
-    jQuery("#addtodoitem").click(function (e) {
-        var todoinput = jQuery("#todoinput").val();
-        if (todoinput) {
-            var sharesObj = jQuery.evalJSON(jQuery("#$customField.id").val());
-            for (var objId in sharesObj) {
-                if (sharesObj[objId]["id"] == todoinput) {
-                    jQuery("#todolist-main").animate({backgroundColor: "red"}, 500, function() { jQuery("#todolist-main").animate({backgroundColor: "white"}, 500);});
-                    return;
-                }
-            }
-
-            jQuery("#items").append("<tr><td><input class='de1' type='checkbox' value='ff'/></td><td><span>" + todoinput + "</span></td><td><a href='#' class='de'/></td></tr>");
-            jQuery("#$customField.id").val("dewdw");
-            jQuery(".de1").change(function() {
-                var sharesObj1 = jQuery.evalJSON(jQuery("#$customField.id").val());
-                var tx = jQuery(this).parent().next().find("span").text();
-                for (var objId in sharesObj) {
-                    if (sharesObj[objId]["id"] == tx) {
-                        if (this.checked) {
-                            sharesObj[objId]["type"] = 'done';
-                        } else {
-                            sharesObj[objId]["type"] = 'todo';
-                        }
-                        jQuery("#$customField.id").val(jQuery.toJSON(sharesObj));
-                    }
-                }
-
-                if (this.checked) {
-                    jQuery(this).parent().next().children().css({'color': 'red', 'text-decoration': 'line-through'});
-                } else {
-                    jQuery(this).parent().next().children().css({'color': 'black', 'text-decoration': 'none'});
-                }
-            });
-
-            jQuery(".de").click(function(e) {
-                jQuery(this).parent().parent().remove();
-            });
-            jQuery("#todoinput").val("");
-
-            var itemObj = new Object();
-            itemObj["id"] = todoinput;
-            itemObj["type"] = "todo";
-            sharesObj.push(itemObj);
-            jQuery("#$customField.id").val(jQuery.toJSON(sharesObj));
-        }
-    });
-</script>
 </div>
-<input type="hidden" name="$customField.id" id="$customField.id" value="[]" class="textfield"/>
+<input type="hidden" name='$customField.id' id='$customField.id' value='$data' class='textfield'/>
 #controlFooter ($action $fieldLayoutItem.fieldDescription $displayParameters.noHeader)

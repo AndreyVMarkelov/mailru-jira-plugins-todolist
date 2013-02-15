@@ -1,0 +1,36 @@
+## Created by Andrey Markelov 13-02-2013.
+## Copyright Mail.Ru Group 2013. All rights reserved.
+<html>
+    <head>
+        <title>$action.getText("ru.mail.todolist.admin.link")</title>
+        <meta name="decorator" content="admin"/>
+        $webResourceManager.requireResource("jira.webresources:global-static")
+        $webResourceManager.requireResource("jira.webresources:jira-global")
+        $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+        $webResourceManager.requireResource("jira.webresources:autocomplete")
+        $webResourceManager.requireResource("ru.mail.jira.plugins.todolist:todolist-resources")
+    </head>
+    <body class="aui">
+        #if($action.hasAdminPermission())
+        <input type="hidden" name="atl_token" id="atl_token" value="$action.getXsrfToken()"/>
+        <table class="grid maxWidth">
+            <thead>
+                <tr>
+                    <th width="50%">$action.getText("ru.mail.todolist.admin.cfid")</th>
+                    <th width="50%">$action.getText("ru.mail.todolist.admin.cfname")</th>
+                </tr>
+            </thead>
+            <tbody>
+            #foreach($field in $action.getFields())
+                <tr>
+                    <td width="50%">$!field.getId()</td>
+                    <td width="50%">$!field.getName()</td>
+                </tr>
+            #end
+            </tbody>
+        </table>
+        #else
+        <div class="errorArea">$action.getText("ru.mail.todolist.admin.link.error")</div>
+        #end
+    </body>
+</html>

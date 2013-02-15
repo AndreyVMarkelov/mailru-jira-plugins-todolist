@@ -3,8 +3,10 @@
         <description>${project.description}</description>
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
-        <param name="plugin-icon">images/pluginIcon.png</param>
-        <param name="plugin-logo">images/pluginLogo.png</param>
+        <param name="plugin-icon">images/todoIcon.png</param>
+        <param name="plugin-logo">images/todoList.png</param>
+        <param name="vendor-icon">images/icon.png</param>
+        <param name="vendor-logo">images/logo.png</param>
     </plugin-info>
 
     <!-- add our i18n resource -->
@@ -14,6 +16,7 @@
     <customfield-type key="todo-list-custom-field" name="ToDo List custom field" class="ru.mail.jira.plugins.ToDoListCf">
         <description>This is the ToDo list custom field</description>
         <resource type="velocity" name="view" location="templates/todolist-cf-view.vm"/>
+        <resource type="velocity" name="column-view" location="templates/todolist-cf-column-view.vm"/>
         <resource type="velocity" name="xml" location="templates/todolist-cf-xml.vm"/>
         <resource type="velocity" name="edit" location="templates/todolist-cf-edit.vm"/>
     </customfield-type>
@@ -27,10 +30,28 @@
         <context>atl.general</context>
     </web-resource>
 
-    <component key="myPluginComponent" class="ru.mail.jira.plugins.MyPluginComponentImpl" public="true">
-        <interface>ru.mail.jira.plugins.MyPluginComponent</interface>
-    </component>
+    <web-item key="todolist-configuration" name="ToDo list custom fields configuration link" section="system.admin/globalsettings" weight="95">
+        <label key="ru.mail.todolist.admin.link"/>
+        <condition class="com.atlassian.jira.plugin.webfragment.conditions.JiraGlobalPermissionCondition">
+            <param name="permission">admin</param>
+        </condition>
+        <link linkId="todolist-configuration">/secure/ToDoListConfigAction!default.jspa</link>
+    </web-item>
 
-    <!-- import from the product container -->
-    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+    <webwork1 key="todolist_conf" name="ToDo list fields configuration" class="java.lang.Object">
+        <actions>
+            <action name="ru.mail.jira.plugins.ToDoListConfigAction" alias="ToDoListConfigAction">
+                <view name="input">/templates/todo-list-conf.vm</view>
+                <view name="success">/templates/todo-list-conf.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+
+    <component key="todolist-data" name="ToDo list plugin data" class="ru.mail.jira.plugins.ToDoDataImpl"/>
+    <component-import key="pluginSettingsFactory">
+        <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
+    </component-import>
+    <component-import key="applicationProperties">
+        <interface>com.atlassian.sal.api.ApplicationProperties</interface>
+    </component-import>
 </atlassian-plugin>

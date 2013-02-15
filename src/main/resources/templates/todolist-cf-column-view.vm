@@ -1,7 +1,16 @@
 ## Created by Andrey Markelov 13-02-2013.
 ## Copyright Mail.Ru Group 2013. All rights reserved.
 #if($value)
-#if(${displayParameters.view_issue})
+#if(${displayParameters.excel_view})
+<table width="100%" class="todotable" id="$currtime">
+#foreach($item in $items)
+    <tr class="initial">
+        <td>#if($item.isDone())X#end</td>
+        <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
+    </tr>
+#end
+</table>
+#else
 <div width="100%" id="todolist-main">
     <table width="100%" class="todotable" id="$currtime">
     #foreach($item in $items)
@@ -12,14 +21,5 @@
     #end
     </table>
 </div>​
-#else
-<table width="100%" class="todotable" id="$currtime">
-#foreach($item in $items)
-    <tr class="initial">
-        <td>#if($item.isDone())X#end</td>
-        <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
-    </tr>
-#end
-</table>
 #end
 #end
