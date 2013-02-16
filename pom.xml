@@ -72,7 +72,7 @@
         </plugins>
     </build>
     <properties>
-        <jira.version>5.1.8</jira.version>
+        <jira.version>5.0</jira.version>
         <amps.version>4.1.2</amps.version>
         <useFastdevCli>false</useFastdevCli>
     </properties>

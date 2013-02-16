@@ -11,7 +11,7 @@
         <tr class="initial" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">
             <td width="16px" class="checkboxcolumn"><input class='todocheckbox' type='checkbox' onchange="ru_mail_changeToDoItem(event, '$customField.id');" #if($item.isDone())checked="checked"#end value='true'/></td>
             <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
-            <td width="32px" ><a href='#' class='todoremovebtn' onclick="ru_mail_removeToDoItem(event, '$customField.id');"/></td>
+            <td width="32px"><a href='#' class='todoremovebtn' onclick="ru_mail_removeToDoItem(event, '$customField.id');"/></td>
         </tr>
     #end
     </table>
