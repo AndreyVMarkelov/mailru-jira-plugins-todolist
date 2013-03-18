@@ -6,6 +6,7 @@ package ru.mail.jira.plugins;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.customfields.impl.AbstractSingleFieldType;
 import com.atlassian.jira.issue.customfields.impl.FieldValidationException;
@@ -13,6 +14,7 @@ import com.atlassian.jira.issue.customfields.manager.GenericConfigManager;
 import com.atlassian.jira.issue.customfields.persistence.CustomFieldValuePersister;
 import com.atlassian.jira.issue.customfields.persistence.PersistenceFieldType;
 import com.atlassian.jira.issue.fields.CustomField;
+import com.atlassian.jira.issue.fields.config.FieldConfig;
 import com.atlassian.jira.issue.fields.layout.field.FieldLayoutItem;
 import com.atlassian.jira.util.NotNull;
 import com.atlassian.jira.util.json.JSONArray;
@@ -69,6 +71,41 @@ public class ToDoListCf
         return (null == obj) ? "" : obj.toString();
     }
 
+    /**
+     * Parse string value to items.
+     */
+    private Set<ToDoItem> getParsedValue(
+        String value)
+    {
+        Set<ToDoItem> items = new LinkedHashSet<ToDoItem>();
+
+        try
+        {
+            JSONArray jsonObj = new JSONArray(value.toString());
+            for (int i = 0; i < jsonObj.length(); i++)
+            {
+                JSONObject obj = jsonObj.getJSONObject(i);
+                String todo = obj.getString("id");
+                String type = obj.getString("type");
+
+                if (type.equals("done"))
+                {
+                    items.add(new ToDoItem(todo, true));
+                }
+                else
+                {
+                    items.add(new ToDoItem(todo, false));
+                }
+            }
+        }
+        catch (JSONException e)
+        {
+            //--> nothing
+        }
+
+        return items;
+    }
+
     @Override
     public String getSingularObjectFromString(String str)
     throws FieldValidationException
@@ -91,42 +128,47 @@ public class ToDoListCf
     {
         Map<String, Object> params = super.getVelocityParameters(issue, field, fieldLayoutItem);
 
-        LinkedHashSet<ToDoItem> items = new LinkedHashSet<ToDoItem>();
-        Object value = issue.getCustomFieldValue(field);
-        if (value != null && !value.toString().isEmpty())
+        Set<ToDoItem> items = new LinkedHashSet<ToDoItem>();
+        if (issue != null)
         {
-            try
+            Object value = issue.getCustomFieldValue(field);
+            if (value != null && !value.toString().isEmpty())
             {
-                JSONArray jsonObj = new JSONArray(value.toString());
-                for (int i = 0; i < jsonObj.length(); i++)
+                items = getParsedValue(value.toString());
+                params.put("data", value.toString());
+            }
+            else
+            {
+                String defValue = null;
+                final FieldConfig config = field.getRelevantConfig(issue);
+                if (config != null)
                 {
-                    JSONObject obj = jsonObj.getJSONObject(i);
-                    String todo = obj.getString("id");
-                    String type = obj.getString("type");
+                    defValue = super.getDefaultValue(config);
+                }
 
-                    if (type.equals("done"))
+                String data;
+                if (defValue != null)
+                {
+                    items = getParsedValue(value.toString());
+                    if (!items.isEmpty())
                     {
-                        items.add(new ToDoItem(todo, true));
+                        data = defValue;
                     }
                     else
                     {
-                        items.add(new ToDoItem(todo, false));
+                        data = "[]";
                     }
                 }
+                else
+                {
+                    data = "[]";
+                }
+                params.put("data", data);
             }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-            params.put("data", value.toString());
+            params.put("i18n", getI18nBean());
         }
-        else
-        {
-            params.put("data", "[]");
-        }
-        params.put("i18n", getI18nBean());
-        params.put("items", items);
         params.put("currtime", Long.valueOf(System.currentTimeMillis()).toString());
+        params.put("items", items);
 
         return params;
     }

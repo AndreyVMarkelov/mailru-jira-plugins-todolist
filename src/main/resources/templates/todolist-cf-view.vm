@@ -11,7 +11,7 @@
         </tr>
     #end
     </table>
-</div>​
+</div>
 #else
 <table width="100%" class="todotable" id="$currtime">
 #foreach($item in $items)
