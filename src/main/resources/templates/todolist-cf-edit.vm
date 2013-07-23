@@ -1,10 +1,8 @@
 ## Created by Andrey Markelov 13-02-2013.
 ## Copyright Mail.Ru Group 2013. All rights reserved.
 #if ($displayParameters.defaultScreen)
-#controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
-    <textarea name="$customField.id" id="$customField.id" class="textfield" rows="4" cols="40" wrap="virtual">$textutils.htmlEncode($!value)</textarea>
-#controlFooter ($action $fieldLayoutItem.fieldDescription $displayParameters.noHeader)
-#else
+    $webResourceManager.requireResource("ru.mail.jira.plugins.todolist:todolist-resources")
+#end
 #controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
     <div width="100%" id="todolist-main">
         <p class="addtodoblock">
@@ -23,4 +21,3 @@
     </div>
     <input type="hidden" name='$customField.id' id='$customField.id' value='$data' class='textfield'/>
 #controlFooter ($action $fieldLayoutItem.fieldDescription $displayParameters.noHeader)
-#end

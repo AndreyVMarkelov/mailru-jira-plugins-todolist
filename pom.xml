@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.mail.jira.plugins</groupId>
     <artifactId>todolist</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
 
     <organization>
         <name>Andrey Markelov|Mail.Ru Group</name>

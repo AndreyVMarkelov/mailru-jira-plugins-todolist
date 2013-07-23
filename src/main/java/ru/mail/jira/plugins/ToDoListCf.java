@@ -45,7 +45,13 @@ public class ToDoListCf
         CustomField field,
         String value)
     {
-        return super.getChangelogValue(field, value);
+        StringBuilder sb = new StringBuilder();
+        Set<ToDoItem> items = getParsedValue(super.getChangelogValue(field, value));
+        for (ToDoItem item : items)
+        {
+            sb.append(item.getTodo()).append(" - ").append((item.isDone()) ? "\u2611" : "\u2610").append("\n");
+        }
+        return sb.toString();
     }
 
     @Override
