@@ -60,7 +60,7 @@ function ru_mail_addToDoItem(event, cfId, currtime) {
         }
 
         //--> add row
-        jQuery("#" + currtime).append("<tr class=\"initial\" onMouseOver=\"this.className='highlight'\" onMouseOut=\"this.className='normal'\"><td width=\"16px\" class=\"checkboxcolumn\"><input onchange=\"ru_mail_changeToDoItem(event, '" + cfId + "');\" class=\"todocheckbox\" type=\"checkbox\" value=\"true\"/></td><td class=\"wrapcolumn\"><span class=\"todo_undone\">" + todoinput + "</span></td><td width=\"32px\"><a href=\"#\" class=\"todoremovebtn\" onclick=\"ru_mail_removeToDoItem(event, '$customField.id');\"/></td></tr>");
+        jQuery("#" + currtime).append("<tr class=\"initial\" onMouseOver=\"this.className='highlight'\" onMouseOut=\"this.className='normal'\"><td width=\"16px\" class=\"checkboxcolumn\"><input onchange=\"ru_mail_changeToDoItem(event, '" + cfId + "');\" class=\"todocheckbox\" type=\"checkbox\" value=\"true\"/></td><td class=\"wrapcolumn\"><span class=\"todo_undone\">" + todoinput + "</span></td><td width=\"32px\"><a href=\"#\" class=\"todoremovebtn\" onclick=\"ru_mail_removeToDoItem(event, '" + cfId + "');\"/></td></tr>");
 
         // clear input
         jQuery("#todoinput").val("");

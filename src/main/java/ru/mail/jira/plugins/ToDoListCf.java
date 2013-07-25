@@ -138,7 +138,7 @@ public class ToDoListCf
         if (issue != null)
         {
             Object value = issue.getCustomFieldValue(field);
-            if (value != null && !value.toString().isEmpty())
+            if (value != null && !value.toString().isEmpty() && !value.toString().equals("[]"))
             {
                 items = getParsedValue(value.toString());
                 params.put("data", value.toString());
