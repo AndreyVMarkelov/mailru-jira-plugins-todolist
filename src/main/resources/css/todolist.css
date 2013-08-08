@@ -5,10 +5,6 @@
 
 #todolist-main {}
 
-.addtodoblock {
-    margin-bottom: 5px;
-}
-
 span.todo_done {
     color: silver;
     text-decoration: line-through;
@@ -22,11 +18,14 @@ span.todo_undone {
 td.checkboxcolumn {
     text-align: center;
     vertical-align: middle;
+    height: 16px;
+    width: 16px;
 }
 
 .todocheckbox {
     cursor: pointer;
     text-align: center;
+    vertical-align: middle;
     display: inline-block;
 }
 
@@ -54,13 +53,31 @@ td.wrapcolumn {
     max-width:600px;
 }
 
+.todoaddbtn {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    background: url('images/add.png') no-repeat center center;
+}
+
+.todoeditbtn {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    background: url('images/note_edit.png') no-repeat center center;
+}
+
 .todoremovebtn {
     cursor: pointer;
-    display: block;
-    width: 32px;
-    height: 32px;
-    background-image: url('images/delete.png');
-    background-repeat: no-repeat;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    background: url('images/delete.png') no-repeat center center;
 }
 
 .jiraform {

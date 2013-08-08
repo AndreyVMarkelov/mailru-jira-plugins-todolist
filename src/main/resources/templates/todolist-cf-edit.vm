@@ -5,18 +5,21 @@
 #end
 #controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
     <div width="100%" id="todolist-main">
-        <p class="addtodoblock">
-            <input type="text" size="50" id="todoinput"/>
-            <input type="button" id="addtodoitem" onclick="ru_mail_addToDoItem(event, '$customField.id', '$currtime');" value='$i18n.getText("ru.mail.todolist.addtodo")'/>
-        </p>
-        <table width="100%" class="todotable" id="$currtime">
-        #foreach($item in $items)
-            <tr class="initial" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">
-                <td width="16px" class="checkboxcolumn"><input class='todocheckbox' type='checkbox' onchange="ru_mail_changeToDoItem(event, '$customField.id');" #if($item.isDone())checked="checked"#end value='true'/></td>
-                <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
-                <td width="32px"><a href='#' class='todoremovebtn' onclick="ru_mail_removeToDoItem(event, '$customField.id');"/></td>
+        <table style="border-collapse: collapse;">
+            <tr>
+                <td><input type="text" size="50" id="todoinput"/></td>
+                <td><span class="todoaddbtn" id="addtodoitem" onclick="ru_mail_addToDoItem(event, '$customField.id', '$currtime');"/></td>
             </tr>
-        #end
+        </table>
+        <table width="100%" class="todotable" id="$currtime" valign="center">
+            #foreach($item in $items)
+            <tr style="height: 16px;" class="initial" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">
+                <td ALIGN="CENTER" VALIGN="MIDDLE" width="16px" class="checkboxcolumn"><input class='todocheckbox' type='checkbox' onchange="ru_mail_changeToDoItem(event, '$customField.id');" #if($item.isDone())checked="checked"#end value='true'/></td>
+                <td class="wrapcolumn"><span#if($item.isDone()) class="todo_done"#else class="todo_undone"#end>$item.getTodo()</span></td>
+                <td ALIGN="CENTER" VALIGN="MIDDLE" width="16px"><a href='#' class='todoeditbtn' onclick="ru_mail_editToDoItem(event, '$customField.id');"/></td>
+                <td ALIGN="CENTER" VALIGN="MIDDLE" width="16px"><a href='#' class='todoremovebtn' onclick="ru_mail_removeToDoItem(event, '$customField.id');"/></td>
+            </tr>
+            #end
         </table>
     </div>
     <input type="hidden" name='$customField.id' id='$customField.id' value='$data' class='textfield'/>
