@@ -62,6 +62,17 @@ td.wrapcolumn {
     background: url('images/add.png') no-repeat center center;
 }
 
+.todoaddbtn:HOVER {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    background: url('images/add.png') no-repeat center center;
+    opacity:0.6;
+    filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+
 .todoeditbtn {
     cursor: pointer;
     display: inline-block;
@@ -69,6 +80,17 @@ td.wrapcolumn {
     vertical-align: middle;
     width: 16px;
     background: url('images/note_edit.png') no-repeat center center;
+}
+
+.todoeditbtn:HOVER {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    background: url('images/note_edit.png') no-repeat center center;
+    opacity:0.6;
+    filter:alpha(opacity=60); /* For IE8 and earlier */
 }
 
 .todoremovebtn {
@@ -80,44 +102,13 @@ td.wrapcolumn {
     background: url('images/delete.png') no-repeat center center;
 }
 
-.jiraform {
-    border: 1px solid #D2D2D2;
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin: 0 auto;
-}
-
-.jiraformbody {
-    padding: 5px 5px 10px 5px;
-}
-
-.maxWidth {
-    width: 99%;
-}
-
-.jiraformheader {
-    background-color: #F0F0F0;
-}
-
-.grid {
-    background-color: #FCFCFC;
-    border-collapse: collapse;
-    border: 1px solid #D2D2D2;
-    margin-top: .5em;
-    margin-bottom: .5em;
-}
-
-.grid th {
-    background-color: rgb(226, 226, 226);
-}
-
-.grid th, .grid td {
-    border: 1px solid #D2D2D2;
-    padding: 4px;
-    vertical-align: top;
-}
-
-.formtitle {
-    color: rgb(60, 120, 181);
-    font-size: 1.6em;
+.todoremovebtn:HOVER {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    background: url('images/delete.png') no-repeat center center;
+    opacity:0.6;
+    filter:alpha(opacity=60); /* For IE8 and earlier */
 }

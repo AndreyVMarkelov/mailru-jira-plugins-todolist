@@ -23,6 +23,9 @@
 
     <!-- add our web resources -->
     <web-resource key="todolist-resources" name="todolist Web Resources">
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
         <resource type="download" name="todolist.css" location="/css/todolist.css"/>
         <resource type="download" name="todolist.js" location="/js/todolist.js"/>
         <resource type="download" name="jquery.json-2.3.js" location="/js/jquery.json-2.3.js"/>

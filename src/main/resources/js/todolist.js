@@ -53,11 +53,17 @@ function ru_mail_editToDoItem(event, cfId) {
 
     var target = jQuery(event.target);
     var sharesObj = jQuery.evalJSON(jQuery("#" + cfId).val());
+
+    var targetToDo1 = jQuery(target).parent().prev().find("textarea");
+    if (targetToDo1.html()) {
+        return;
+    }
+
     var targetToDo = jQuery(target).parent().prev().find("span");
 
     section++;
     var textarea = '<div><textarea id=\"ddd' + section + '\">' + jQuery(targetToDo).html()+'</textarea>';
-    var button = '<div><input type="button" value="SAVE" class="saveButton" /> <input type="button" value="CANCEL" class="cancelButton" /></div></div>';
+    var button = '<div><input type="button" value=\"' + AJS.I18n.getText("ru.mail.todolist.savetodo") + '\" class="saveButton" /> <input type="button" value=\"' + AJS.I18n.getText("ru.mail.todolist.canceltodo") + '\" class="cancelButton" /></div></div>';
 
     jQuery(targetToDo).after(textarea + button).hide();
     jQuery('.saveButton').click(function(){ru_mail_saveChanges(targetToDo, section, cfId);});
