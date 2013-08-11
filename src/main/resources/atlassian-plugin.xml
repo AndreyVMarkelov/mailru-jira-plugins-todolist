@@ -21,6 +21,15 @@
         <resource type="velocity" name="edit" location="templates/todolist-cf-edit.vm"/>
     </customfield-type>
 
+    <customfield-searcher key="todo-list-custom-field-searcher" name="ToDo List Custom Field Searcher"
+                          class="ru.mail.jira.plugins.ToDoFieldSearcher">
+        <description>This is the ToDo list custom field searcher</description>
+        <resource type="velocity" name="label" location="/templates/todolist-cf-label.vm"/>
+        <resource type="velocity" name="search" location="/templates/todolist-cf-label.vm"/>
+        <resource type="velocity" name="view" location="/templates/todolist-cf-view-search.vm"/>
+        <valid-customfield-type package="${project.groupId}.${project.artifactId}" key="todo-list-custom-field"/>
+    </customfield-searcher>
+
     <!-- add our web resources -->
     <web-resource key="todolist-resources" name="todolist Web Resources">
         <transformation extension="js">

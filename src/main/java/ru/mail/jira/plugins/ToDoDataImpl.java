@@ -9,8 +9,6 @@ package ru.mail.jira.plugins;
  * 
  * @author Andrey Markelov
  */
-public class ToDoDataImpl
-    implements ToDoData
-{
+public class ToDoDataImpl implements ToDoData {
     
 }

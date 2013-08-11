@@ -9,7 +9,6 @@ package ru.mail.jira.plugins;
  * 
  * @author Andrey Markelov
  */
-public interface ToDoData
-{
+public interface ToDoData {
 
 }
