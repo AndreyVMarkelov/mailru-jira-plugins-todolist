@@ -9,6 +9,11 @@ public class ToDoDataItem {
 
     public ToDoDataItem() {}
 
+    public ToDoDataItem(boolean isReporter, boolean isNobody) {
+        this.isReporter = isReporter;
+        this.isNobody = isNobody;
+    }
+
     public List<String> getGroups() {
         return groups;
     }

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>$action.getText("ru.mail.todolist.admin.link")</title>
+        <title>$action.getText("ru.mail.todolist.admin.link.field")</title>
         <meta name="decorator" content="admin"/>
         $webResourceManager.requireResource("jira.webresources:global-static")
         $webResourceManager.requireResource("jira.webresources:jira-global")
@@ -10,31 +10,41 @@
     </head>
     <body class="aui">
         #if($action.hasAdminPermission())
-        <input type="hidden" name="atl_token" id="atl_token" value="$action.getXsrfToken()"/>
-        <table class="grid maxWidth">
-            <thead>
-                <tr>
-                    <th width="15%">$action.getText("ru.mail.todolist.admin.cfid")</th>
-                    <th width="15%">$action.getText("ru.mail.todolist.admin.cfname")</th>
-                    <th width="50%">$action.getText("ru.mail.todolist.admin.cfprops")</th>
-                    <th width="20%">$action.getText("ru.mail.todolist.admin.cfactions")</th>
-                </tr>
-            </thead>
-            <tbody>
-            #foreach($field in $action.getFields())
-                <tr>
-                    <td width="15%">$!field.getId()</td>
-                    <td width="15%">$!field.getName()</td>
-                    <td width="50%">
-                        $!field.getName()
-                    </td>
-                    <td width="20%">
-                        <a href="ToDoListConfigAction!configure.jspa">$action.getText("ru.mail.todolist.admin.cfactionconf")</a>
-                    </td>
-                </tr>
+            #if($action.getCurrentFieldData())
+            <h3>$action.getText("ru.mail.todolist.admin.link.field")</h3>
+            <form class="aui" onsubmit="if (this.submitted) return false; this.submitted = true; return true"
+                    name="jiraform" method="post" action="ToDoListConfigAction.jspa">
+                <input type="hidden" name="atl_token" value="$atl_token"/>
+                <input type="hidden" name="currentField" value="$currentField"/>
+                <table>
+                    <tr>
+                        <td><label for="currentFieldName">$i18n.getText("ru.mail.todolist.admin.cfname"):</label></td>
+                        <td><span id="currentFieldName" name="currentFieldName">$action.getCurrentFieldData().getName()</span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="nobody">$i18n.getText("ru.mail.todolist.admin.nobodyperm"):</label></td>
+                        <td><input type="checkbox" id="nobody" #if($nobody == "true")checked="checked"#end name="nobody" value="true"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="reporter">$i18n.getText("ru.mail.todolist.admin.reporterperm"):</label></td>
+                        <td><input type="checkbox" id="reporter" #if($reporter == "true")checked="checked"#end name="reporter" value="true"/></td>
+                    </tr>
+                </table>
+                <div class="buttons-container">
+                    <div class="buttons">
+                        <input class="button submit" type="submit" name="add" value="$action.getText("common.words.save")" accesskey="S" title="Press Alt+Shift+S to submit form"/>
+                        <input class="button submit" id="cancelButton" type="button" accesskey="`" title="Cancel (Alt+Shift + `)" name="Cancel" value="$action.getText("common.words.cancel")" onclick="window.history.back();"/>
+                    </div>
+                </div>
+            </form>
+            #else
+            <div class="errorArea">$i18n.getText("ru.mail.todolist.admin.cfid.error", $currentField)</div>
+            <div class="buttons-container">
+                <div class="buttons">
+                    <input class="button submit" id="cancelButton" type="button" accesskey="`" title="Cancel (Alt+Shift + `)" name="Cancel" value="$action.getText("common.words.cancel")" onclick="window.history.back();"/>
+                </div>
+            </div>
             #end
-            </tbody>
-        </table>
         #else
         <div class="errorArea">$action.getText("ru.mail.todolist.admin.link.error")</div>
         #end

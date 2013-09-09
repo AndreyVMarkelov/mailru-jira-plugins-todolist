@@ -3,9 +3,11 @@ package ru.andreymarkelov.atlas.plugins.todos;
 import java.util.ArrayList;
 import java.util.List;
 import com.atlassian.crowd.embedded.api.User;
+import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.CustomFieldManager;
 import com.atlassian.jira.issue.fields.CustomField;
 import com.atlassian.jira.security.Permissions;
+import com.atlassian.jira.security.xsrf.RequiresXsrfCheck;
 import com.atlassian.jira.web.action.JiraWebActionSupport;
 import com.atlassian.sal.api.ApplicationProperties;
 
@@ -17,6 +19,10 @@ public class ToDoListConfigAction extends JiraWebActionSupport {
     private final CustomFieldManager cfMgr;
 
     private List<ToDoFieldData> fields;
+    private String currentField;
+    private ToDoFieldData currentFieldData;
+    private String reporter;
+    private String nobody;
 
     public ToDoListConfigAction(ApplicationProperties applicationProperties, ToDoData pluginData, CustomFieldManager cfMgr) {
         this.applicationProperties = applicationProperties;
@@ -26,6 +32,23 @@ public class ToDoListConfigAction extends JiraWebActionSupport {
     }
 
     public String doConfigure() throws Exception {
+        currentFieldData = null;
+        if (currentField != null) {
+            CustomField cf = ComponentAccessor.getCustomFieldManager().getCustomFieldObject(currentField);
+            if (cf != null) {
+                ToDoDataItem data = pluginData.getToDoDataItem(cf.getId());
+                if (data != null) {
+                    currentFieldData = new ToDoFieldData(cf.getId(), cf.getName(), data);
+                    reporter = Boolean.toString(data.isReporter());
+                    nobody = Boolean.toString(data.isNobody());
+                } else {
+                    currentFieldData = new ToDoFieldData(cf.getId(), cf.getName());
+                    reporter = Boolean.FALSE.toString();
+                    nobody = Boolean.FALSE.toString();
+                }
+            }
+        }
+
         return "configure";
     }
 
@@ -45,12 +68,35 @@ public class ToDoListConfigAction extends JiraWebActionSupport {
         return SUCCESS;
     }
 
+    @Override
+    @RequiresXsrfCheck
+    protected String doExecute() throws Exception {
+        pluginData.setToDoDataItem(currentField, new ToDoDataItem(Boolean.parseBoolean(reporter), Boolean.parseBoolean(nobody)));
+        return getRedirect("ToDoListConfigAction!default.jspa");
+    }
+
     public String getBaseUrl() {
         return applicationProperties.getBaseUrl();
     }
 
+    public String getCurrentField() {
+        return currentField;
+    }
+
+    public ToDoFieldData getCurrentFieldData() {
+        return currentFieldData;
+    }
+
     public List<ToDoFieldData> getFields() {
         return fields;
+    }
+
+    public String getNobody() {
+        return nobody;
+    }
+
+    public String getReporter() {
+        return reporter;
     }
 
     public boolean hasAdminPermission() {
@@ -62,5 +108,17 @@ public class ToDoListConfigAction extends JiraWebActionSupport {
             return true;
         }
         return false;
+    }
+
+    public void setCurrentField(String currentField) {
+        this.currentField = currentField;
+    }
+
+    public void setNobody(String nobody) {
+        this.nobody = nobody;
+    }
+
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
     }
 }

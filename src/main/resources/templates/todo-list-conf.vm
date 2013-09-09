@@ -23,13 +23,18 @@
             <tbody>
             #foreach($field in $action.getFields())
                 <tr>
-                    <td width="15%" class="todogrid">$!field.getId()</td>
-                    <td width="15%" class="todogrid">$!field.getName()</td>
+                    <td width="15%" class="todogrid">$field.getId()</td>
+                    <td width="15%" class="todogrid">$field.getName()</td>
                     <td width="50%" class="todogrid">
-                        $!field.getName()
+                        #if($field.getData())
+                        <div>$i18n.getText("ru.mail.todolist.admin.nobodyperm"): #if($field.getData().isNobody())&#x2611;#end</div>
+                        <div>$i18n.getText("ru.mail.todolist.admin.reporterperm"): #if($field.getData().isReporter())&#x2611;#end</div>
+                        #else
+                        $action.getText("ru.mail.todolist.admin.nodataconf")
+                        #end
                     </td>
                     <td width="20%" class="todogrid">
-                        <a href="ToDoListConfigAction!configure.jspa">$action.getText("ru.mail.todolist.admin.cfactionconf")</a>
+                        <a href="ToDoListConfigAction!configure.jspa?currentField=$field.getId()">$action.getText("ru.mail.todolist.admin.cfactionconf")</a>
                     </td>
                 </tr>
             #end

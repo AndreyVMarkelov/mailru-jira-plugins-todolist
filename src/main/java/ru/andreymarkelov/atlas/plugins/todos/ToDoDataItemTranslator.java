@@ -14,7 +14,7 @@ public class ToDoDataItemTranslator {
         }
 
         try {
-            JSONObject jsonObj = new JSONObject(object);
+            JSONObject jsonObj = new JSONObject(object.toString());
             ToDoDataItem data = new ToDoDataItem();
             if (jsonObj.has("isReporter")) {
                 data.setReporter(jsonObj.getBoolean("isReporter"));
