@@ -1,7 +1,7 @@
 ## Created by Andrey Markelov 13-02-2013.
 ## Copyright Mail.Ru Group 2013. All rights reserved.
 #if ($displayParameters.defaultScreen)
-    $webResourceManager.requireResource("ru.mail.jira.plugins.todolist:todolist-resources")
+    $webResourceManager.requireResource("ru.andreymarkelov.atlas.plugins.todos.todolist:todolist-resources")
 #end
 #controlHeader ($action $customField.id $customField.name $fieldLayoutItem.required $displayParameters.noHeader)
     <div width="100%" id="todolist-main">

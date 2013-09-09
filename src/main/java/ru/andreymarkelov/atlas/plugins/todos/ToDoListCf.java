@@ -2,7 +2,7 @@
  * Created by Andrey Markelov 13-02-2013.
  * Copyright Mail.Ru Group 2013. All rights reserved.
  */
-package ru.mail.jira.plugins;
+package ru.andreymarkelov.atlas.plugins.todos;
 
 import java.util.LinkedHashSet;
 import java.util.Map;

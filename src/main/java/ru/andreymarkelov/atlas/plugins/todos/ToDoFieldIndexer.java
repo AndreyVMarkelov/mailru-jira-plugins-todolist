@@ -1,4 +1,4 @@
-package ru.mail.jira.plugins;
+package ru.andreymarkelov.atlas.plugins.todos;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -17,9 +17,7 @@ import com.atlassian.jira.web.FieldVisibilityManager;
 public class ToDoFieldIndexer extends AbstractCustomFieldIndexer {
     private final CustomField customField;
 
-    public ToDoFieldIndexer(
-            FieldVisibilityManager fieldVisibilityManager,
-            CustomField customField) {
+    public ToDoFieldIndexer(FieldVisibilityManager fieldVisibilityManager, CustomField customField) {
         super(fieldVisibilityManager, customField);
         this.customField = customField;
     }

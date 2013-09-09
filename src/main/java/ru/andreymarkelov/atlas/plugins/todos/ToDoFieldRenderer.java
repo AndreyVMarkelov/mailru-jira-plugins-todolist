@@ -1,4 +1,4 @@
-package ru.mail.jira.plugins;
+package ru.andreymarkelov.atlas.plugins.todos;
 
 import com.atlassian.crowd.embedded.api.User;
 import com.atlassian.jira.issue.customfields.CustomFieldValueProvider;
@@ -13,9 +13,6 @@ import com.atlassian.query.Query;
 public class ToDoFieldRenderer extends CustomFieldRenderer {
     private ClauseNames clauseNames;
 
-    /**
-     * Constructor.
-     */
     public ToDoFieldRenderer(
             ClauseNames clauseNames,
             CustomFieldSearcherModuleDescriptor customFieldSearcherModuleDescriptor,

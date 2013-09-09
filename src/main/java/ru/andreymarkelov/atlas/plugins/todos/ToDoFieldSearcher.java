@@ -1,4 +1,4 @@
-package ru.mail.jira.plugins;
+package ru.andreymarkelov.atlas.plugins.todos;
 
 import static com.atlassian.jira.util.dbc.Assertions.notNull;
 

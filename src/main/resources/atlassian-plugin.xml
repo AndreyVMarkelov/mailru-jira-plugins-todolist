@@ -13,7 +13,7 @@
     <resource type="i18n" name="i18n" location="todolist"/>
 
     <!-- Custom fields -->
-    <customfield-type key="todo-list-custom-field" name="ToDo List custom field" class="ru.mail.jira.plugins.ToDoListCf">
+    <customfield-type key="todo-list-custom-field" name="ToDo List custom field" class="ru.andreymarkelov.atlas.plugins.todos.ToDoListCf">
         <description>This is the ToDo list custom field</description>
         <resource type="velocity" name="view" location="templates/todolist-cf-view.vm"/>
         <resource type="velocity" name="column-view" location="templates/todolist-cf-column-view.vm"/>
@@ -22,7 +22,7 @@
     </customfield-type>
 
     <customfield-searcher key="todo-list-custom-field-searcher" name="ToDo List Custom Field Searcher"
-                          class="ru.mail.jira.plugins.ToDoFieldSearcher">
+                          class="ru.andreymarkelov.atlas.plugins.todos.ToDoFieldSearcher">
         <description>This is the ToDo list custom field searcher</description>
         <resource type="velocity" name="label" location="/templates/todolist-cf-label.vm"/>
         <resource type="velocity" name="search" location="/templates/todolist-cf-label.vm"/>
@@ -52,14 +52,15 @@
 
     <webwork1 key="todolist_conf" name="ToDo list fields configuration" class="java.lang.Object">
         <actions>
-            <action name="ru.mail.jira.plugins.ToDoListConfigAction" alias="ToDoListConfigAction">
+            <action name="ru.andreymarkelov.atlas.plugins.todos.ToDoListConfigAction" alias="ToDoListConfigAction">
                 <view name="input">/templates/todo-list-conf.vm</view>
                 <view name="success">/templates/todo-list-conf.vm</view>
+                <view name="configure">/templates/todo-list-conf-edit.vm</view>
             </action>
         </actions>
     </webwork1>
 
-    <component key="todolist-data" name="ToDo list plugin data" class="ru.mail.jira.plugins.ToDoDataImpl"/>
+    <component key="todolist-data" name="ToDo list plugin data" class="ru.andreymarkelov.atlas.plugins.todos.ToDoDataImpl"/>
     <component-import key="pluginSettingsFactory">
         <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
     </component-import>

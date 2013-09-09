@@ -1,4 +1,4 @@
-package ru.mail.jira.plugins;
+package ru.andreymarkelov.atlas.plugins.todos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,6 @@ import com.atlassian.query.operator.Operator;
 public class ToDoFieldSearchInputTransformer extends MultiSelectCustomFieldSearchInputTransformer {
     private JqlOperandResolver jqlOperandResolver;
 
-    /**
-     * Constructor.
-     */
     public ToDoFieldSearchInputTransformer(
             String urlParameterName,
             ClauseNames clauseNames,

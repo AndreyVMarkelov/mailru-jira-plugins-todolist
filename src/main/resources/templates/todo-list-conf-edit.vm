@@ -6,29 +6,29 @@
         $webResourceManager.requireResource("jira.webresources:jira-global")
         $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
         $webResourceManager.requireResource("jira.webresources:autocomplete")
-        $webResourceManager.requireResource("ru.mail.jira.plugins.todolist:todolist-resources")
+        $webResourceManager.requireResource("ru.andreymarkelov.atlas.plugins.todos.todolist:todolist-resources")
     </head>
     <body class="aui">
         #if($action.hasAdminPermission())
         <input type="hidden" name="atl_token" id="atl_token" value="$action.getXsrfToken()"/>
-        <table width="100%" class="todogrid">
+        <table class="grid maxWidth">
             <thead>
                 <tr>
-                    <th width="15%" class="todogrid">$action.getText("ru.mail.todolist.admin.cfid")</th>
-                    <th width="15%" class="todogrid">$action.getText("ru.mail.todolist.admin.cfname")</th>
-                    <th width="50%" class="todogrid">$action.getText("ru.mail.todolist.admin.cfprops")</th>
-                    <th width="20%" class="todogrid">$action.getText("ru.mail.todolist.admin.cfactions")</th>
+                    <th width="15%">$action.getText("ru.mail.todolist.admin.cfid")</th>
+                    <th width="15%">$action.getText("ru.mail.todolist.admin.cfname")</th>
+                    <th width="50%">$action.getText("ru.mail.todolist.admin.cfprops")</th>
+                    <th width="20%">$action.getText("ru.mail.todolist.admin.cfactions")</th>
                 </tr>
             </thead>
             <tbody>
             #foreach($field in $action.getFields())
                 <tr>
-                    <td width="15%" class="todogrid">$!field.getId()</td>
-                    <td width="15%" class="todogrid">$!field.getName()</td>
-                    <td width="50%" class="todogrid">
+                    <td width="15%">$!field.getId()</td>
+                    <td width="15%">$!field.getName()</td>
+                    <td width="50%">
                         $!field.getName()
                     </td>
-                    <td width="20%" class="todogrid">
+                    <td width="20%">
                         <a href="ToDoListConfigAction!configure.jspa">$action.getText("ru.mail.todolist.admin.cfactionconf")</a>
                     </td>
                 </tr>
