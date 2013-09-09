@@ -49,6 +49,17 @@ public class ToDoListCf extends AbstractSingleFieldType<String> {
         return str;
     }
 
+    private Set<ToDoItem> getItems(Issue issue, CustomField field) {
+        Set<ToDoItem> items = new LinkedHashSet<ToDoItem>();
+        if (issue != null) {
+            Object value = issue.getCustomFieldValue(field);
+            if (value != null) {
+                items = getParsedValue(value.toString());
+            }
+        }
+        return items;
+    }
+
     @Override
     @Nullable
     protected String getObjectFromDbValue(@NotNull Object obj) throws FieldValidationException {
@@ -89,47 +100,48 @@ public class ToDoListCf extends AbstractSingleFieldType<String> {
     @NotNull
     public Map getVelocityParameters(Issue issue, CustomField field, FieldLayoutItem fieldLayoutItem) {
         Map<String, Object> params = super.getVelocityParameters(issue, field, fieldLayoutItem);
+        params.put("i18n", getI18nBean());
+        params.put("currtime", Long.valueOf(System.currentTimeMillis()).toString());
 
-        Set<ToDoItem> items = new LinkedHashSet<ToDoItem>();
+        Set<ToDoItem> items = getItems(issue, field);
         if (issue != null) {
             Object value = issue.getCustomFieldValue(field);
-            String defValue = super.getDefaultValue(field.getRelevantConfig(issue));
-
-            if (value != null && !value.toString().isEmpty() && !value.toString().equals("[]")) {
-                items = getParsedValue(value.toString());
+            if (isValueData(value)) {
                 params.put("data", value.toString());
             } else {
-                String data;
-                if (defValue != null) {
-                    items = getParsedValue(value.toString());
-                    if (!items.isEmpty()) {
-                        data = defValue;
-                    } else {
-                        data = "[]";
-                    }
-                } else {
-                    data = "[]";
+                String data = "[]";
+                String defValue = super.getDefaultValue(field.getRelevantConfig(issue));
+                if (defValue != null && !items.isEmpty()) {
+                    data = defValue;
                 }
                 params.put("data", data);
             }
         }
-        params.put("i18n", getI18nBean());
         params.put("editable", isEditable(issue, field));
-        params.put("currtime", Long.valueOf(System.currentTimeMillis()).toString());
         params.put("items", items);
-
         return params;
     }
 
     private boolean isEditable(Issue issue, CustomField field) {
-        if (issue == null) return true;
+        // if issue is null we can edit
+        if (issue == null || issue.getKey() == null) return true;
+
+        // if permissions are not configured we can edit
         ToDoDataItem data = pluginData.getToDoDataItem(field.getId());
         if (data == null) return true;
 
+        // if default value is set and option is set we cannot edit
         String defValue = super.getDefaultValue(field.getRelevantConfig(issue));
-        if (defValue != null && data.isNobody()) return false;
-        if (data.isReporter() && !ComponentAccessor.getJiraAuthenticationContext().getLoggedInUser().getName().equals(issue.getReporterUser().getName())) return false;
+        if (defValue != null && defValue.length() > 0 && data.isNobody()) return false;
+
+        // if option reporter only is set and user is not repoter we cannot edit
+        String loggedUser = ComponentAccessor.getJiraAuthenticationContext().getLoggedInUser().getName();
+        if (data.isReporter() && issue.getReporterUser() != null && !loggedUser.equals(issue.getReporterUser().getName())) return false;
 
         return true;
+    }
+
+    private boolean isValueData(Object value) {
+        return value != null && value.toString().length() > 0 && !value.toString().equals("[]") ? true : false;
     }
 }
