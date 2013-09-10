@@ -44,9 +44,18 @@
 
     <web-item key="todolist-configuration" name="ToDo list custom fields configuration link" section="system.admin/globalsettings" weight="95">
         <label key="ru.mail.todolist.admin.link"/>
-        <condition class="com.atlassian.jira.plugin.webfragment.conditions.JiraGlobalPermissionCondition">
-            <param name="permission">admin</param>
-        </condition>
+        <conditions type="AND">
+            <condition class="com.atlassian.jira.plugin.webfragment.conditions.JiraGlobalPermissionCondition"><param name="permission">admin</param></condition>
+            <condition class="ru.andreymarkelov.atlas.plugins.todos.IsPriorToJiraVersion"><param name="majorVersion">6</param><param name="minorVersion">0</param></condition>
+        </conditions>
+        <link linkId="todolist-configuration">/secure/ToDoListConfigAction!default.jspa</link>
+    </web-item>
+    <web-item key="todolist-configuration_jira6" name="ToDo list custom fields configuration link" section="admin_system_menu/top_system_section" weight="95">
+        <label key="ru.mail.todolist.admin.link"/>
+        <conditions type="AND">
+            <condition class="com.atlassian.jira.plugin.webfragment.conditions.JiraGlobalPermissionCondition"><param name="permission">admin</param></condition>
+            <condition class="ru.andreymarkelov.atlas.plugins.todos.IsAtLeastJiraVersion"><param name="majorVersion">6</param><param name="minorVersion">0</param></condition>
+        </conditions>
         <link linkId="todolist-configuration">/secure/ToDoListConfigAction!default.jspa</link>
     </web-item>
 

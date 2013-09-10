@@ -1,5 +1,4 @@
-// Created by Andrey Markelov 13-02-2013.
-// Copyright Mail.Ru Group 2013. All rights reserved.
+
 
 var section = 1;
 
@@ -79,7 +78,7 @@ function ru_mail_addToDoItem(event, cfId, currtime) {
         var sharesObj = jQuery.evalJSON(jQuery("#" + cfId).val());
         for (var objId in sharesObj) {
             if (sharesObj[objId]["id"] == todoinput) {
-                jQuery("#todolist-main").animate({backgroundColor: "red"}, 500, function() { jQuery("#todolist-main").animate({backgroundColor: "white"}, 500);});
+                jQuery("#todoaddblk" + currtime).animate({backgroundColor: "red"}, 500, function() { jQuery("#todoaddblk" + currtime).animate({backgroundColor: "white"}, 500);});
                 return;
             }
         }

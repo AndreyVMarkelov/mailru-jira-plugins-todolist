@@ -18,15 +18,15 @@
                 <input type="hidden" name="currentField" value="$currentField"/>
                 <table>
                     <tr>
-                        <td><label for="currentFieldName">$i18n.getText("ru.mail.todolist.admin.cfname"):</label></td>
+                        <td><label for="currentFieldName"><strong>$i18n.getText("ru.mail.todolist.admin.cfname"):</strong></label></td>
                         <td><span id="currentFieldName" name="currentFieldName">$action.getCurrentFieldData().getName()</span></td>
                     </tr>
                     <tr>
-                        <td><label for="nobody">$i18n.getText("ru.mail.todolist.admin.nobodyperm"):</label></td>
+                        <td><label for="nobody"><strong>$i18n.getText("ru.mail.todolist.admin.nobodyperm"):</strong></label></td>
                         <td><input type="checkbox" id="nobody" #if($nobody == "true")checked="checked"#end name="nobody" value="true"/></td>
                     </tr>
                     <tr>
-                        <td><label for="reporter">$i18n.getText("ru.mail.todolist.admin.reporterperm"):</label></td>
+                        <td><label for="reporter"><strong>$i18n.getText("ru.mail.todolist.admin.reporterperm"):</strong></label></td>
                         <td><input type="checkbox" id="reporter" #if($reporter == "true")checked="checked"#end name="reporter" value="true"/></td>
                     </tr>
                 </table>

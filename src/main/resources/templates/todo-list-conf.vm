@@ -27,10 +27,10 @@
                     <td width="15%" class="todogrid">$field.getName()</td>
                     <td width="50%" class="todogrid">
                         #if($field.getData())
-                        <div>$i18n.getText("ru.mail.todolist.admin.nobodyperm"): #if($field.getData().isNobody())&#x2611;#end</div>
-                        <div>$i18n.getText("ru.mail.todolist.admin.reporterperm"): #if($field.getData().isReporter())&#x2611;#end</div>
+                            #if($field.getData().isNobody())<p>$i18n.getText("ru.mail.todolist.admin.nobodyperm")</p>#end
+                            #if($field.getData().isReporter())<p>$i18n.getText("ru.mail.todolist.admin.reporterperm")</p>#end
                         #else
-                        $action.getText("ru.mail.todolist.admin.nodataconf")
+                            <p>$action.getText("ru.mail.todolist.admin.nodataconf")</p>
                         #end
                     </td>
                     <td width="20%" class="todogrid">
