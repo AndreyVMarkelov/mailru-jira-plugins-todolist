@@ -1,5 +1,3 @@
-
-
 var section = 1;
 
 //--> this function change todo state
@@ -62,11 +60,32 @@ function ru_mail_editToDoItem(event, cfId) {
 
     section++;
     var textarea = '<div><textarea id=\"ddd' + section + '\">' + jQuery(targetToDo).html()+'</textarea>';
-    var button = '<div><input type="button" value=\"' + AJS.I18n.getText("ru.mail.todolist.savetodo") + '\" class="saveButton" /> <input type="button" value=\"' + AJS.I18n.getText("ru.mail.todolist.canceltodo") + '\" class="cancelButton" /></div></div>';
+    var saveBtn = '<input type="button" value=\"' + AJS.I18n.getText("ru.mail.todolist.savetodo") + '\" id="savebtn' + section + '" class="saveButton" />';
+    var cancelBtn = '<input type="button" value=\"' + AJS.I18n.getText("ru.mail.todolist.canceltodo") + '\" id="cancelbtn' + section + '" class="cancelButton" />';
+    var button = '<div>' + saveBtn + cancelBtn + '</div></div>';
 
     jQuery(targetToDo).after(textarea + button).hide();
-    jQuery('.saveButton').click(function(){ru_mail_saveChanges(targetToDo, section, cfId);});
-    jQuery('.cancelButton').click(function(){ru_mail_cancelChanges(targetToDo, section);});
+    jQuery('#savebtn' + section).click(function() {
+        var textar = jQuery(this).parent().parent().find("textarea");
+        var newvalue = textar.val();
+        if (!newvalue) return;
+
+        var targetToDoVal = jQuery(targetToDo).text();
+        var sharesObj = jQuery.evalJSON(jQuery("#" + cfId).val());
+        for (var objId in sharesObj) {
+            if (sharesObj[objId]["id"] == targetToDoVal) {
+                sharesObj[objId]["id"] = newvalue;
+                jQuery("#" + cfId).val(jQuery.toJSON(sharesObj));
+            }
+        }
+
+        jQuery(textar).parent().remove();
+        jQuery(targetToDo).html(newvalue).show();
+    });
+    jQuery('#cancelbtn' + section).click(function() {
+        jQuery(this).parent().parent().remove();
+        jQuery(targetToDo).show();
+    });
 }
 
 //--> this function add todo
@@ -99,28 +118,5 @@ function ru_mail_addToDoItem(event, cfId, currtime) {
         itemObj["type"] = "todo";
         sharesObj.push(itemObj);
         jQuery("#" + cfId).val(jQuery.toJSON(sharesObj));
-        ru_mail_setEditable();
     }
-}
-
-function ru_mail_saveChanges(obj, section, cfId) {
-    var newvalue = jQuery('#ddd' + section).val();
-    if (!newvalue) return;
-
-    var targetToDo = jQuery(obj).text();
-    var sharesObj = jQuery.evalJSON(jQuery("#" + cfId).val());
-    for (var objId in sharesObj) {
-        if (sharesObj[objId]["id"] == targetToDo) {
-            sharesObj[objId]["id"] = newvalue;
-            jQuery("#" + cfId).val(jQuery.toJSON(sharesObj));
-        }
-    }
-
-    jQuery('#ddd' + section).parent().remove();
-    jQuery(obj).html(newvalue).show();
-}
-
-function ru_mail_cancelChanges(obj, section) {
-    jQuery('#ddd' + section).parent().remove();
-    jQuery(obj).show();
 }
