@@ -1,0 +1,6 @@
+#if($!todofieldparam)
+<p>$i18n.getText("ru.andreymarkelov.atlas.plugins.todos.customfieldname"): $todofieldname</p>
+<p>$i18n.getText("ru.andreymarkelov.atlas.plugins.todos.customfieldid"): $todofieldparam</p>
+#else
+<p>$i18n.getText("ru.andreymarkelov.atlas.plugins.todos.customfield.empty")</p>
+#end

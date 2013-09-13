@@ -7,15 +7,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.mail.jira.plugins</groupId>
     <artifactId>todolist</artifactId>
-    <version>1.7</version>
+    <version>1.8</version>
 
     <organization>
-        <name>Andrey Markelov|Mail.Ru Group</name>
-        <url>http://www.corp.mail.ru/</url>
+        <name>Andrey Markelov</name>
+        <url>http://ru.linkedin.com/in/andreymarkelov/</url>
     </organization>
 
     <name>ToDo list custom field</name>
-    <description>This is the ru.mail.jira.plugins:todolist plugin for Atlassian JIRA.</description>
+    <description>This is a simple checklist custom field.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencies>

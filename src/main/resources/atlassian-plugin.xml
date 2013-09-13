@@ -6,7 +6,7 @@
         <param name="plugin-icon">images/todoIcon.png</param>
         <param name="plugin-logo">images/todoList.png</param>
         <param name="vendor-icon">images/icon.png</param>
-        <param name="vendor-logo">images/logo.png</param>
+        <param name="vendor-logo">images/icon.png</param>
     </plugin-info>
 
     <!-- add our i18n resource -->
@@ -14,7 +14,7 @@
 
     <!-- Custom fields -->
     <customfield-type key="todo-list-custom-field" name="ToDo List custom field" class="ru.andreymarkelov.atlas.plugins.todos.ToDoListCf">
-        <description>This is the ToDo list custom field</description>
+        <description>This is a simple checklist custom field.</description>
         <resource type="velocity" name="view" location="templates/todolist-cf-view.vm"/>
         <resource type="velocity" name="column-view" location="templates/todolist-cf-column-view.vm"/>
         <resource type="velocity" name="xml" location="templates/todolist-cf-xml.vm"/>
@@ -76,4 +76,20 @@
     <component-import key="applicationProperties">
         <interface>com.atlassian.sal.api.ApplicationProperties</interface>
     </component-import>
+
+    <workflow-validator key="todolist-all-done-validator" name="ToDo list all done validator" class="ru.andreymarkelov.atlas.plugins.todos.ToDoListAllDoneValidatorFactory">
+        <description>This validator checks that all todo items of a ToDo list field is done.</description>
+        <validator-class>ru.andreymarkelov.atlas.plugins.todos.ToDoListAllDoneValidator</validator-class>
+        <resource type="velocity" name="view" location="templates/todo-list-view-alldone-validator.vm"/>
+        <resource type="velocity" name="input-parameters" location="templates/todo-list-edit-alldone-validator.vm"/>
+        <resource type="velocity" name="edit-parameters" location="templates/todo-list-edit-alldone-validator.vm"/>
+    </workflow-validator>
+
+    <workflow-condition key="todolist-all-done-condition" name="ToDo list all done condition" class="ru.andreymarkelov.atlas.plugins.todos.ToDoListAllDoneConditionFactory">
+        <description>This condition checks that all todo items of a ToDo list field is done.</description>
+        <condition-class>ru.andreymarkelov.atlas.plugins.todos.ToDoListAllDoneCondition</condition-class>
+        <resource type="velocity" name="view" location="templates/todo-list-view-alldone-condition.vm"/>
+        <resource type="velocity" name="input-parameters" location="templates/todo-list-edit-alldone-condition.vm"/>
+        <resource type="velocity" name="edit-parameters" location="templates/todo-list-edit-alldone-condition.vm"/>
+    </workflow-condition>
 </atlassian-plugin>
