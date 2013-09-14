@@ -1,11 +1,11 @@
 <tr bgcolor="#ffffff">
-    <td align="right" valign="top" bgcolor="#fffff0">
+    <td align="right" valign="top">
         <span class="label">$i18n.getText("ru.andreymarkelov.atlas.plugins.todos.customfield"):</span>
     </td>
     <td bgcolor="#ffffff" nowrap>
         <select id="todofieldparam" name="todofieldparam">
             #foreach($field in $todofields)
-            <option #if($todofieldparam == $field.getId())selected="selected"#end value="$field.getId()">$field.getName()</option>
+            <option #if($todofieldparam && $todofieldparam == $field.getId())selected="selected"#end value="$field.getId()">$field.getName()</option>
             #end
         </select>
         <br><font size="1">$i18n.getText("ru.andreymarkelov.atlas.plugins.todos.customfield.desc")</font>

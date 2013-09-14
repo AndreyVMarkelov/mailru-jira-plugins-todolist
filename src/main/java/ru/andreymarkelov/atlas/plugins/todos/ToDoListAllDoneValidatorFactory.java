@@ -20,7 +20,11 @@ public class ToDoListAllDoneValidatorFactory extends AbstractWorkflowPluginFacto
     @Override
     public Map<String, ?> getDescriptorParams(Map<String, Object> validatorParams) {
         Map<String, String> result = new HashMap<String, String>();
-        result.put(TODO_FIELD_PARAM, extractSingleParam(validatorParams, TODO_FIELD_PARAM));
+        if (validatorParams.containsKey(TODO_FIELD_PARAM)) {
+            result.put(TODO_FIELD_PARAM, extractSingleParam(validatorParams, TODO_FIELD_PARAM));
+        } else {
+            result.put(TODO_FIELD_PARAM, "");
+        }
         return result;
     }
 

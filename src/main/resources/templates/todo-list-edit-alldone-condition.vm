@@ -1,5 +1,5 @@
 <tr bgcolor="#ffffff">
-    <td align="right" valign="top" bgcolor="#fffff0">
+    <td align="right" valign="top">
         <span class="label">$i18n.getText("ru.andreymarkelov.atlas.plugins.todos.customfield"):</span>
     </td>
     <td bgcolor="#ffffff" nowrap>

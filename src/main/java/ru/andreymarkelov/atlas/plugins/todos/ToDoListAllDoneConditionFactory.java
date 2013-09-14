@@ -20,7 +20,11 @@ public class ToDoListAllDoneConditionFactory extends AbstractWorkflowPluginFacto
     @Override
     public Map<String, ?> getDescriptorParams(Map<String, Object> conditionParams) {
         Map<String, String> result = new HashMap<String, String>();
-        result.put(TODO_FIELD_PARAM, extractSingleParam(conditionParams, TODO_FIELD_PARAM));
+        if (conditionParams.containsKey(TODO_FIELD_PARAM)) {
+            result.put(TODO_FIELD_PARAM, extractSingleParam(conditionParams, TODO_FIELD_PARAM));
+        } else {
+            result.put(TODO_FIELD_PARAM, "");
+        }
         return result;
     }
 

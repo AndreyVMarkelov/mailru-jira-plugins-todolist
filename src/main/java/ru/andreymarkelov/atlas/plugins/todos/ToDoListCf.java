@@ -17,9 +17,6 @@ import com.atlassian.jira.issue.fields.config.FieldConfig;
 import com.atlassian.jira.issue.fields.layout.field.FieldLayoutItem;
 import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.NotNull;
-import com.atlassian.jira.util.json.JSONArray;
-import com.atlassian.jira.util.json.JSONException;
-import com.atlassian.jira.util.json.JSONObject;
 import com.atlassian.util.concurrent.Nullable;
 
 public class ToDoListCf extends AbstractSingleFieldType<String> {
@@ -33,7 +30,7 @@ public class ToDoListCf extends AbstractSingleFieldType<String> {
     @Override
     public String getChangelogValue(CustomField field, String value) {
         StringBuilder sb = new StringBuilder();
-        Set<ToDoItem> items = getParsedValue(super.getChangelogValue(field, value));
+        Set<ToDoItem> items = ToDoUtils.getParsedValue(super.getChangelogValue(field, value));
         for (ToDoItem item : items) {
             sb.append(item.getTodo()).append(": ").append((item.isDone()) ? "+" : "-").append("\n");
         }
@@ -57,7 +54,7 @@ public class ToDoListCf extends AbstractSingleFieldType<String> {
         if (issue != null) {
             Object value = issue.getCustomFieldValue(field);
             if (value != null) {
-                items = getParsedValue(value.toString());
+                items = ToDoUtils.getParsedValue(value.toString());
             }
         }
         return items;
@@ -67,26 +64,6 @@ public class ToDoListCf extends AbstractSingleFieldType<String> {
     @Nullable
     protected String getObjectFromDbValue(@NotNull Object obj) throws FieldValidationException {
         return (null == obj) ? "" : obj.toString();
-    }
-
-    private Set<ToDoItem> getParsedValue(String value) {
-        Set<ToDoItem> items = new LinkedHashSet<ToDoItem>();
-        try {
-            JSONArray jsonObj = new JSONArray(value.toString());
-            for (int i = 0; i < jsonObj.length(); i++) {
-                JSONObject obj = jsonObj.getJSONObject(i);
-                String todo = obj.getString("id");
-                String type = obj.getString("type");
-                if (type.equals("done")) {
-                    items.add(new ToDoItem(todo, true));
-                } else {
-                    items.add(new ToDoItem(todo, false));
-                }
-            }
-        } catch (JSONException e) {
-            //--> nothing
-        }
-        return items;
     }
 
     @Override
